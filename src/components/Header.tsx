@@ -1,7 +1,8 @@
 
-import { Search, MessageCircle } from "lucide-react";
+import { Search, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 interface HeaderProps {
   searchQuery: string;
@@ -12,6 +13,8 @@ interface HeaderProps {
 }
 
 const Header = ({ searchQuery, onSearchChange, onSearch, onOpenChat, isLoading }: HeaderProps) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       onSearch();
@@ -19,60 +22,91 @@ const Header = ({ searchQuery, onSearchChange, onSearch, onOpenChat, isLoading }
   };
 
   return (
-    <header className="bg-brand-white border-b border-brand-gray-200">
-      <div className="container mx-auto px-4 py-6">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-brand-red font-inter mb-2">
-            FábioBooks
-          </h1>
-          <p className="text-brand-gray-600 text-lg font-inter">
-            Descubra seu próximo livro favorito
-          </p>
-        </div>
-
-        {/* Search Section */}
-        <div className="max-w-2xl mx-auto">
-          <div className="flex gap-3 mb-4">
-            <div className="relative flex-1">
-              <Input
-                type="text"
-                placeholder="Buscar livros..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                onKeyPress={handleKeyPress}
-                className="w-full h-12 px-4 border-2 border-brand-gray-300 rounded-lg font-inter 
-                         focus:border-brand-red focus:ring-2 focus:ring-brand-red/20 
-                         transition-all duration-200"
-                disabled={isLoading}
-              />
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-brand-gray-400 h-5 w-5" />
-            </div>
-            
-            <Button
-              onClick={onSearch}
-              disabled={isLoading}
-              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 h-12 rounded-lg 
-                       font-inter font-medium transition-all duration-200 disabled:opacity-50"
-            >
-              {isLoading ? 'Buscando...' : 'Buscar'}
-            </Button>
+    <header className="bg-brand-white border-b border-brand-gray-200 sticky top-0 z-40">
+      <div className="container mx-auto px-4">
+        {/* Navigation Bar */}
+        <div className="flex items-center justify-between py-4">
+          {/* Logo */}
+          <div className="flex items-center">
+            <h1 className="text-2xl font-bold text-brand-red font-inter">
+              FábioBooks
+            </h1>
           </div>
 
-          {/* Chat Button */}
-          <div className="text-center">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#" className="text-brand-gray-600 hover:text-brand-red transition-colors font-inter font-medium">
+              Home
+            </a>
+            <a href="#" className="text-brand-gray-600 hover:text-brand-red transition-colors font-inter font-medium">
+              Livros
+            </a>
+            <a href="#" className="text-brand-gray-600 hover:text-brand-red transition-colors font-inter font-medium">
+              Contato
+            </a>
+          </nav>
+
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-4">
             <Button
               onClick={onOpenChat}
               variant="outline"
               className="border-brand-red text-brand-red hover:bg-brand-red hover:text-white 
-                       px-4 py-2 rounded-lg font-inter font-medium transition-all duration-200
-                       flex items-center gap-2 mx-auto"
+                       transition-all duration-200 flex items-center gap-2"
             >
               <MessageCircle className="h-4 w-4" />
-              Converse com nossa IA para recomendações
+              Chat IA
+            </Button>
+            
+            <Button
+              variant="outline"
+              className="border-brand-gray-300 text-brand-gray-600 hover:bg-brand-gray-100"
+            >
+              Cadastrar
+            </Button>
+
+            <Button className="bg-brand-red hover:bg-brand-red-dark text-white">
+              Entrar
             </Button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-brand-gray-600"
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-brand-gray-200 animate-fade-in">
+            <nav className="flex flex-col space-y-4">
+              <a href="#" className="text-brand-gray-600 hover:text-brand-red transition-colors font-inter font-medium">
+                Home
+              </a>
+              <a href="#" className="text-brand-gray-600 hover:text-brand-red transition-colors font-inter font-medium">
+                Livros
+              </a>
+              <a href="#" className="text-brand-gray-600 hover:text-brand-red transition-colors font-inter font-medium">
+                Contato
+              </a>
+              <div className="flex flex-col space-y-2 pt-4">
+                <Button
+                  onClick={onOpenChat}
+                  variant="outline"
+                  className="border-brand-red text-brand-red hover:bg-brand-red hover:text-white w-full"
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  Chat IA
+                </Button>
+                <Button variant="outline" className="w-full">Cadastrar</Button>
+                <Button className="bg-brand-red hover:bg-brand-red-dark text-white w-full">Entrar</Button>
+              </div>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );

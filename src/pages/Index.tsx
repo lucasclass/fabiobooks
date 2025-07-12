@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 import BookCard from "@/components/BookCard";
 import ChatModal from "@/components/ChatModal";
 import { useToast } from "@/hooks/use-toast";
@@ -140,8 +141,10 @@ const Index = () => {
 
   // Show popular books on first load
   useEffect(() => {
-    setBooks(mockBooks.slice(0, 6));
-  }, []);
+    if (!hasSearched) {
+      setBooks(mockBooks.slice(0, 6));
+    }
+  }, [hasSearched]);
 
   return (
     <div className="min-h-screen bg-brand-white font-inter">
@@ -153,14 +156,25 @@ const Index = () => {
         isLoading={isLoading}
       />
 
+      {/* Hero Section - only show when not searched */}
+      {!hasSearched && (
+        <HeroSection
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          onSearch={handleSearch}
+          onOpenChat={() => setIsChatOpen(true)}
+          isLoading={isLoading}
+        />
+      )}
+
       <main className="container mx-auto px-4 py-8">
         {/* Results Section */}
         {!hasSearched && (
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold text-brand-black mb-2">
-              Livros Populares
+            <h2 className="text-3xl font-bold text-brand-black mb-3">
+              Livros em Destaque
             </h2>
-            <p className="text-brand-gray-600">
+            <p className="text-brand-gray-600 text-lg">
               Descubra alguns dos livros mais queridos pelos nossos leitores
             </p>
           </div>
@@ -168,11 +182,11 @@ const Index = () => {
 
         {hasSearched && (
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-brand-black mb-2">
+            <h2 className="text-3xl font-bold text-brand-black mb-3">
               {isLoading ? 'Buscando...' : `Resultados para "${searchQuery}"`}
             </h2>
             {!isLoading && (
-              <p className="text-brand-gray-600">
+              <p className="text-brand-gray-600 text-lg">
                 {books.length === 0 
                   ? 'Nenhum livro encontrado' 
                   : `${books.length} livro(s) encontrado(s)`
@@ -212,16 +226,17 @@ const Index = () => {
         {!isLoading && hasSearched && books.length === 0 && (
           <div className="text-center py-16 animate-fade-in">
             <div className="text-6xl mb-4">📚</div>
-            <h3 className="text-xl font-semibold text-brand-black mb-2">
+            <h3 className="text-2xl font-bold text-brand-black mb-3">
               Nenhum livro encontrado
             </h3>
-            <p className="text-brand-gray-600 mb-6">
+            <p className="text-brand-gray-600 mb-6 text-lg">
               Tente buscar com outros termos ou converse com nossa IA para descobrir novos livros!
             </p>
             <button
               onClick={() => setIsChatOpen(true)}
-              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg 
-                       font-medium transition-all duration-200"
+              className="bg-gradient-to-r from-brand-red to-brand-red-dark hover:from-brand-red-dark hover:to-brand-red 
+                       text-white px-8 py-4 rounded-xl font-semibold text-lg
+                       transition-all duration-200 hover:shadow-lg hover:scale-105"
             >
               Pedir Recomendações à IA
             </button>
