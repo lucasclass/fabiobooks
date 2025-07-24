@@ -1,73 +1,77 @@
-# Welcome to your Lovable project
 
-## Project info
+# FábioBooks Frontend
 
-**URL**: https://lovable.dev/projects/55c8dc78-4594-4846-9fb8-e0c8138f89eb
+## Visão Geral
 
-## How can I edit this code?
+Este é o frontend do projeto FábioBooks, uma aplicação React moderna para busca, recomendação e exibição de livros. O projeto utiliza Vite, TypeScript, Tailwind CSS, shadcn-ui e segue boas práticas de organização em monorepo.
 
-There are several ways of editing your application.
+## Estrutura de Pastas
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/55c8dc78-4594-4846-9fb8-e0c8138f89eb) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+apps/web/
+├── src/
+│   ├── components/
+│   │   ├── BookCard.tsx
+│   │   ├── ChatModal.tsx
+│   │   ├── Header.tsx
+│   │   ├── HeroSection.tsx
+│   │   └── ui/ (componentes reutilizáveis)
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/
+│   │   ├── Index.tsx
+│   │   └── NotFound.tsx
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── public/
+├── package.json
+├── tsconfig.json
+├── tailwind.config.ts
+└── vite.config.ts
 ```
 
-**Edit a file directly in GitHub**
+## Tecnologias Utilizadas
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
+- shadcn-ui
+- Radix UI
 
-## How can I deploy this project?
+## Como rodar o projeto localmente
 
-Simply open [Lovable](https://lovable.dev/projects/55c8dc78-4594-4846-9fb8-e0c8138f89eb) and click on Share -> Publish.
+1. Clone o repositório:
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd fabiobooks/apps/web
+   ```
+2. Instale as dependências:
+   ```sh
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```sh
+   npm run dev
+   ```
+4. Acesse `http://localhost:8080` no navegador.
 
-## Can I connect a custom domain to my Lovable project?
+## Principais Funcionalidades
 
-Yes, you can!
+- Busca de livros com feedback instantâneo
+- Exibição de livros em destaque
+- Recomendações via IA (ChatModal)
+- Componentes visuais modernos e responsivos
+- Toasts para notificações
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Convenções de Commit
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Utilize mensagens de commit claras, por exemplo:
+
+- `chore(config): ajustes nas configurações do projeto`
+- `feat(ui): adiciona novos componentes de interface`
+- `fix: corrige erro de importação no componente X`
+
+---
+Projeto mantido por devscarioca.
